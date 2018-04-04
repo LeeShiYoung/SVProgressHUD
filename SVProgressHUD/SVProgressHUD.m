@@ -472,7 +472,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     }
     
     // |-spacing-content-spacing-|
-    hudWidth = SVProgressHUDHorizontalSpacing + MAX(labelWidth, contentWidth) + SVProgressHUDHorizontalSpacing + self.imageView.frame.size.width + SVProgressHUDHorizontalSpacing;
+    hudWidth = SVProgressHUDHorizontalSpacing + MAX(labelWidth, contentWidth) + SVProgressHUDHorizontalSpacing + self.imageView.frame.size.width + 20;
     
     // |-spacing-content-(labelSpacing-label-)spacing-|
     hudHeight = SVProgressHUDVerticalSpacing + labelHeight + contentHeight + SVProgressHUDVerticalSpacing;
@@ -846,7 +846,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             // Update imageView
             if (self.shouldTintImages) {
                 if (image.renderingMode != UIImageRenderingModeAlwaysTemplate) {
-                    strongSelf.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    strongSelf.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
                 }
                 strongSelf.imageView.tintColor = strongSelf.foregroundColorForStyle;
             } else {
