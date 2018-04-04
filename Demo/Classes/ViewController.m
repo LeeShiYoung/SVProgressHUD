@@ -161,6 +161,7 @@ static float progress = 0.0f;
     UISegmentedControl *segmentedControl = (UISegmentedControl*)sender;
     if(segmentedControl.selectedSegmentIndex == 0){
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+//        [SVProgressHUD setErrorImage:""];
     } else if(segmentedControl.selectedSegmentIndex == 1){
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     } else if(segmentedControl.selectedSegmentIndex == 2){

@@ -450,8 +450,11 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                                                         options:(NSStringDrawingOptions)(NSStringDrawingUsesFontLeading | NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin)
                                                      attributes:@{NSFontAttributeName: self.statusLabel.font}
                                                         context:NULL];
+
         labelHeight = ceilf(CGRectGetHeight(labelRect));
         labelWidth = ceilf(CGRectGetWidth(labelRect));
+//        labelRect.origin.x = 55.0;
+//        labelRect.origin.y = 9.0;
     }
     
     // Calculate hud size based on content
@@ -469,13 +472,14 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     }
     
     // |-spacing-content-spacing-|
-    hudWidth = SVProgressHUDHorizontalSpacing + MAX(labelWidth, contentWidth) + SVProgressHUDHorizontalSpacing;
+    hudWidth = SVProgressHUDHorizontalSpacing + MAX(labelWidth, contentWidth) + SVProgressHUDHorizontalSpacing + self.imageView.frame.size.width + SVProgressHUDHorizontalSpacing;
     
     // |-spacing-content-(labelSpacing-label-)spacing-|
     hudHeight = SVProgressHUDVerticalSpacing + labelHeight + contentHeight + SVProgressHUDVerticalSpacing;
     if(self.statusLabel.text && (imageUsed || progressUsed)){
         // Add spacing if both content and label are used
-        hudHeight += SVProgressHUDLabelSpacing;
+//        hudHeight += SVProgressHUDLabelSpacing;
+        hudHeight = 40;
     }
     
     // Update values on subviews
@@ -497,7 +501,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     if(self.progress != SVProgressHUDUndefinedProgress) {
         self.backgroundRingView.center = self.ringView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
     }
-    self.imageView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
+//    self.imageView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
 
     // Label
     if(imageUsed || progressUsed) {
@@ -505,8 +509,8 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     } else {
         centerY = CGRectGetMidY(self.hudView.bounds);
     }
-    self.statusLabel.frame = labelRect;
-    self.statusLabel.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
+    self.statusLabel.frame = CGRectMake(self.statusLabel.frame.origin.x, self.statusLabel.frame.origin.y, labelRect.size.width, labelRect.size.height);
+//    self.statusLabel.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
     
     [CATransaction commit];
 }
@@ -849,11 +853,13 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                 strongSelf.imageView.image = image;
             }
             strongSelf.imageView.hidden = NO;
+            strongSelf.imageView.frame = CGRectMake(20, 7.5, strongSelf.imageView.frame.size.width, strongSelf.imageView.frame.size.height);
             
             // Update text
             strongSelf.statusLabel.hidden = status.length == 0;
             strongSelf.statusLabel.text = status;
-            
+            strongSelf.statusLabel.frame = CGRectMake(55, 9, strongSelf.statusLabel.frame.size.width, strongSelf.statusLabel.frame.size.height);
+          
             // Fade in delayed if a grace time is set
             // An image will be dismissed automatically. Thus pass the duration as userInfo.
             if (self.graceTimeInterval > 0.0 && self.backgroundView.alpha == 0.0f) {
