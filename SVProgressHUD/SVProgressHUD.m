@@ -475,7 +475,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     hudWidth = SVProgressHUDHorizontalSpacing + MAX(labelWidth, contentWidth) + SVProgressHUDHorizontalSpacing + self.imageView.frame.size.width + 20;
     
     // |-spacing-content-(labelSpacing-label-)spacing-|
-    hudHeight = SVProgressHUDVerticalSpacing + labelHeight + contentHeight + SVProgressHUDVerticalSpacing;
+    hudHeight = labelHeight + 9 + 9 + 2;
     if(self.statusLabel.text && (imageUsed || progressUsed)){
         // Add spacing if both content and label are used
 //        hudHeight += SVProgressHUDLabelSpacing;
@@ -509,8 +509,10 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         centerY = CGRectGetMidY(self.hudView.bounds);
     }
     self.statusLabel.frame = CGRectMake(self.statusLabel.frame.origin.x, self.statusLabel.frame.origin.y, labelRect.size.width, labelRect.size.height);
-//    self.statusLabel.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
-    self.imageView.center = CGPointMake(self.imageView.center.x, CGRectGetMidY(self.statusLabel.bounds));
+
+    self.imageView.center = CGPointMake(self.imageView.center.x, self.statusLabel.center.y);
+    NSLog(@"%.2f", self.imageView.center.y);
+    NSLog(@"%.2f", self.statusLabel.center.y);
     [CATransaction commit];
 }
 

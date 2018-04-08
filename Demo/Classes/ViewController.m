@@ -128,7 +128,10 @@ static float progress = 0.0f;
 }
 
 - (void)showSuccessWithStatus {
-	[SVProgressHUD showSuccessWithStatus:@"Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!"];
+    [SVProgressHUD setBackgroundColor:[UIColor greenColor]];
+    [SVProgressHUD setCornerRadius:20];
+    [SVProgressHUD setMinimumSize:CGSizeZero];
+	[SVProgressHUD showSuccessWithStatus:@"Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!"];
     self.activityCount++;
 }
 
