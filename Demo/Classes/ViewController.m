@@ -23,6 +23,16 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.activityCount = 0;
+    
+//    UIView *_hudView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 90, 90)];
+//    _hudView.backgroundColor = [UIColor redColor];
+//    _hudView.layer.cornerRadius = 5;
+////    _hudView.layer.masksToBounds = YES;
+//    _hudView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
+//    _hudView.layer.shadowColor = [UIColor blackColor].CGColor;
+//    _hudView.layer.shadowOpacity = 0.5;
+//    _hudView.layer.shadowOffset = CGSizeMake(0.0,0.0f);
+//    [self.view addSubview:_hudView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -39,7 +39,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 @property (nonatomic, strong) UIControl *controlView;
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) SVRadialGradientLayer *backgroundRadialGradientLayer;
-@property (nonatomic, strong) UIVisualEffectView *hudView;
+@property (nonatomic, strong) UIView *hudView;
 @property (nonatomic, strong) UILabel *statusLabel;
 @property (nonatomic, strong) UIImageView *imageView;
 
@@ -789,10 +789,10 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                 
                 // Add ring to HUD
                 if(!strongSelf.ringView.superview){
-                    [strongSelf.hudView.contentView addSubview:strongSelf.ringView];
+                    [strongSelf.hudView addSubview:strongSelf.ringView];
                 }
                 if(!strongSelf.backgroundRingView.superview){
-                    [strongSelf.hudView.contentView addSubview:strongSelf.backgroundRingView];
+                    [strongSelf.hudView addSubview:strongSelf.backgroundRingView];
                 }
                 
                 // Set progress animated
@@ -810,7 +810,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                 [strongSelf cancelRingLayerAnimation];
                 
                 // Add indefiniteAnimatedView to HUD
-                [strongSelf.hudView.contentView addSubview:strongSelf.indefiniteAnimatedView];
+                [strongSelf.hudView addSubview:strongSelf.indefiniteAnimatedView];
                 if([strongSelf.indefiniteAnimatedView respondsToSelector:@selector(startAnimating)]) {
                     [(id)strongSelf.indefiniteAnimatedView startAnimating];
                 }
@@ -1264,12 +1264,15 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     
     return _backgroundView;
 }
-- (UIVisualEffectView*)hudView {
+- (UIView *)hudView {
     if(!_hudView) {
-        _hudView = [UIVisualEffectView new];
-        _hudView.layer.masksToBounds = YES;
+        _hudView = [[UIView alloc] init];
         _hudView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
+        _hudView.layer.shadowColor = [UIColor blackColor].CGColor;
+        _hudView.layer.shadowOpacity = 0.2;
+        _hudView.layer.shadowOffset = CGSizeMake(0.0,0.0f);
     }
+    
     if(!_hudView.superview) {
         [self addSubview:_hudView];
     }
@@ -1290,7 +1293,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         _statusLabel.numberOfLines = 0;
     }
     if(!_statusLabel.superview) {
-      [self.hudView.contentView addSubview:_statusLabel];
+      [self.hudView addSubview:_statusLabel];
     }
     
     // Update styling
@@ -1310,7 +1313,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _imageViewSize.width, _imageViewSize.height)];
     }
     if(!_imageView.superview) {
-        [self.hudView.contentView addSubview:_imageView];
+        [self.hudView addSubview:_imageView];
     }
     
     return _imageView;
@@ -1372,9 +1375,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 - (void)fadeInEffects {
     if(self.defaultStyle != SVProgressHUDStyleCustom) {
         // Add blur effect
-        UIBlurEffectStyle blurEffectStyle = self.defaultStyle == SVProgressHUDStyleDark ? UIBlurEffectStyleDark : UIBlurEffectStyleLight;
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:blurEffectStyle];
-        self.hudView.effect = blurEffect;
+//        UIBlurEffectStyle blurEffectStyle = self.defaultStyle == SVProgressHUDStyleDark ? UIBlurEffectStyleDark : UIBlurEffectStyleLight;
+//        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:blurEffectStyle];
+//        self.hudView.effect = blurEffect;
         
         // We omit UIVibrancy effect and use a suitable background color as an alternative.
         // This will make everything more readable. See the following for details:
@@ -1398,7 +1401,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 {
     if(self.defaultStyle != SVProgressHUDStyleCustom) {
         // Remove blur effect
-        self.hudView.effect = nil;
+//        self.hudView.effect = nil;
     }
 
     // Remove background color
