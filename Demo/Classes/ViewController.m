@@ -27,6 +27,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [SVProgressHUD setForegroundColor:[UIColor redColor]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleNotification:)
@@ -127,7 +128,7 @@ static float progress = 0.0f;
 }
 
 - (void)showSuccessWithStatus {
-	[SVProgressHUD showSuccessWithStatus:@"Great Success!"];
+	[SVProgressHUD showSuccessWithStatus:@"Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!Great Success!"];
     self.activityCount++;
 }
 

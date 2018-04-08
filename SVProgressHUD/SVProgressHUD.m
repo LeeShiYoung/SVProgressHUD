@@ -479,7 +479,6 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     if(self.statusLabel.text && (imageUsed || progressUsed)){
         // Add spacing if both content and label are used
 //        hudHeight += SVProgressHUDLabelSpacing;
-        hudHeight = 40;
     }
     
     // Update values on subviews
@@ -511,7 +510,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     }
     self.statusLabel.frame = CGRectMake(self.statusLabel.frame.origin.x, self.statusLabel.frame.origin.y, labelRect.size.width, labelRect.size.height);
 //    self.statusLabel.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
-    
+    self.imageView.center = CGPointMake(self.imageView.center.x, CGRectGetMidY(self.statusLabel.bounds));
     [CATransaction commit];
 }
 
