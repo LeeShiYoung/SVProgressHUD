@@ -135,6 +135,11 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     [self setDefaultStyle:SVProgressHUDStyleCustom];
 }
 
++ (void)setStrokeColor:(UIColor*)color {
+    [self sharedView].strokeColor = color;
+    [self setDefaultStyle:SVProgressHUDStyleCustom];
+}
+
 + (void)setBackgroundColor:(UIColor*)color {
     [self sharedView].backgroundColor = color;
     [self setDefaultStyle:SVProgressHUDStyleCustom];
@@ -496,7 +501,8 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     } else {
         centerY = CGRectGetMidY(self.hudView.bounds);
     }
-    self.indefiniteAnimatedView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
+//    self.indefiniteAnimatedView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
+    
     if(self.progress != SVProgressHUDUndefinedProgress) {
         self.backgroundRingView.center = self.ringView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
     }
@@ -508,11 +514,15 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     } else {
         centerY = CGRectGetMidY(self.hudView.bounds);
     }
-    self.statusLabel.frame = CGRectMake(self.statusLabel.frame.origin.x, self.statusLabel.frame.origin.y, labelRect.size.width, labelRect.size.height);
+    
+    CGFloat imageViewMargin = 0.0f;
+    if (self.imageView.frame.origin.x == 0.0) {
+        imageViewMargin = 20;
+    }
+    self.statusLabel.frame = CGRectMake(self.imageView.frame.origin.x + self.imageView.frame.size.width + 10 + imageViewMargin, 9, labelRect.size.width, labelRect.size.height);
 
     self.imageView.center = CGPointMake(self.imageView.center.x, self.statusLabel.center.y);
-    NSLog(@"%.2f", self.imageView.center.y);
-    NSLog(@"%.2f", self.statusLabel.center.y);
+    self.indefiniteAnimatedView.center = CGPointMake(self.imageView.center.x + imageViewMargin, self.imageView.center.y);
     [CATransaction commit];
 }
 
@@ -859,7 +869,6 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             // Update text
             strongSelf.statusLabel.hidden = status.length == 0;
             strongSelf.statusLabel.text = status;
-            strongSelf.statusLabel.frame = CGRectMake(55, 9, strongSelf.statusLabel.frame.size.width, strongSelf.statusLabel.frame.size.height);
           
             // Fade in delayed if a grace time is set
             // An image will be dismissed automatically. Thus pass the duration as userInfo.
@@ -1073,12 +1082,12 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         }
         
         if(!_indefiniteAnimatedView){
-            _indefiniteAnimatedView = [[SVIndefiniteAnimatedView alloc] initWithFrame:CGRectZero];
+            _indefiniteAnimatedView = [[SVIndefiniteAnimatedView alloc] initWithFrame:CGRectMake(0, 0, 17, 17)];
         }
         
         // Update styling
         SVIndefiniteAnimatedView *indefiniteAnimatedView = (SVIndefiniteAnimatedView*)_indefiniteAnimatedView;
-        indefiniteAnimatedView.strokeColor = self.foregroundColorForStyle;
+        indefiniteAnimatedView.strokeColor = self.strokeColor;
         indefiniteAnimatedView.strokeThickness = self.ringThickness;
         indefiniteAnimatedView.radius = self.statusLabel.text ? self.ringRadius : self.ringNoTextRadius;
     } else {
@@ -1096,7 +1105,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         UIActivityIndicatorView *activityIndicatorView = (UIActivityIndicatorView*)_indefiniteAnimatedView;
         activityIndicatorView.color = self.foregroundColorForStyle;
     }
-    [_indefiniteAnimatedView sizeToFit];
+//    [_indefiniteAnimatedView sizeToFit];
     
     return _indefiniteAnimatedView;
 }

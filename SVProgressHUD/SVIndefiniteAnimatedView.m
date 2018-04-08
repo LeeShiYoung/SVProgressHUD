@@ -28,6 +28,7 @@
 - (void)layoutAnimatedLayer {
     CALayer *layer = self.indefiniteAnimatedLayer;
     [self.layer addSublayer:layer];
+//    layer.bounds = self.bounds;
     
     CGFloat widthDiff = CGRectGetWidth(self.bounds) - CGRectGetWidth(layer.bounds);
     CGFloat heightDiff = CGRectGetHeight(self.bounds) - CGRectGetHeight(layer.bounds);
@@ -109,7 +110,7 @@
 
 - (void)setRadius:(CGFloat)radius {
     if(radius != _radius) {
-        _radius = radius;
+        _radius = 17 * 0.5;
         
         [_indefiniteAnimatedLayer removeFromSuperlayer];
         _indefiniteAnimatedLayer = nil;
