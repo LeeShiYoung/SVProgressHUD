@@ -480,7 +480,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     hudWidth = SVProgressHUDHorizontalSpacing + MAX(labelWidth, contentWidth) + SVProgressHUDHorizontalSpacing + self.imageView.frame.size.width + 20;
     
     // |-spacing-content-(labelSpacing-label-)spacing-|
-    hudHeight = labelHeight + 9 + 9 + 2;
+    hudHeight = labelHeight + 9 + 9;
     if(self.statusLabel.text && (imageUsed || progressUsed)){
         // Add spacing if both content and label are used
 //        hudHeight += SVProgressHUDLabelSpacing;
